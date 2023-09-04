@@ -9,8 +9,8 @@ const dropZone = document.getElementById('dropzone');
 const dnd = dragdrop();
 
 dragDrop.makeDropZone(dropZone, {
-			onDragEnter: dragEnterHandler,
-			onDragLeave: dragLeaveHandler,
+      onDragEnter: dragEnterHandler,
+      onDragLeave: dragLeaveHandler,
       onDragOver: dragOverhandler,
       onDrop: dropHandler,
 });
@@ -19,7 +19,7 @@ dnd.makeReiszeAbleSelector('.dragable');
 ```
 
 
-there are a set events that are called when specific action take place.
+there are a set events that are fired when specific actions take place, you can hook to and get the important information about affected component.
 
 * onInsert
 * onResize
