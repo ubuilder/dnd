@@ -8,7 +8,7 @@ function addPlaceholder(e: Event): void {
 	const placeholder = document.createElement('div');
 	placeholder.id = 'component-placeholder';
 
-	if (!isSlot(e) && !isDropZone(e)) return;
+	if (!isSlot(<MouseEvent>e) && !isDropZone(e)) return;
 	const index = findIndex(e);
 	insertAtIndex(e.target, placeholder, index);
 }
@@ -18,7 +18,7 @@ function isDropZone(e: Event): Boolean {
 
 function findIndex(e: Event): number {
 	//crazy low level implementation
-	const target = e.target;
+	const target: HTMLElement = e.target as HTMLElement;
 	const children = target.childNodes;
 	if (children.length == 0) return 0;
 	if (children[0].nodeName.startsWith('#')) {
@@ -31,8 +31,8 @@ function findIndex(e: Event): number {
 		if (e.clientY < children[0].querySelector('.u-component').getBoundingClientRect().top) return 0;
 	}
 	for (let i = 0; i < children.length; i++) {
-		let child;
-		let rect;
+		let child: ChildNode;
+		let rect: DOMRect;
 		if (children[i].nodeName.startsWith('#')) {
 			child = children[i];
 			const range = document.createRange();
@@ -65,7 +65,7 @@ function isSlot(e: MouseEvent): Boolean {
 function removePlaceholder(): void {
 	document.getElementById('component-placeholder')?.remove();
 }
-function addResizePoints(target: HTMLelemnt): void {
+function addResizePoints(target: HTMLElement): void {
 	const edges = document.createElement('div');
 	edges.classList.add('edges');
 	edges.innerHTML = `
