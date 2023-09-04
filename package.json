@@ -1,0 +1,29 @@
+{
+  "name": "dnd",
+  "version": "1.0.0",
+  "description": "drag and drop",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "test",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ubuilder/dnd.git"
+  },
+  "keywords": [
+    "drag",
+    "and",
+    "drop"
+  ],
+  "author": "ubuilder",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ubuilder/dnd/issues"
+  },
+  "homepage": "https://github.com/ubuilder/dnd#readme",
+  "dependencies": {
+    "interactjs": "^1.10.18",
+    "typescript": "^5.2.2"
+  }
+}
