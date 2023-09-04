@@ -19,7 +19,7 @@ dnd.makeReiszeAbleSelector('.dragable');
 ```
 
 
-there are a set events that are fired when specific actions take place, you can hook to and get the important information about affected component.
+there are a set if events that are fired when specific actions take place, you can hook to and get the important information about affected component.
 
 * onInsert
 * onResize
