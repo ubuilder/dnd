@@ -21,25 +21,30 @@ function default_1() {
                 target: undefined,
                 parent: undefined,
                 parentId: undefined,
-                slots: undefined
+                slots: undefined,
             };
-        var target = ((_c = (_b = event === null || event === void 0 ? void 0 : event.target) === null || _b === void 0 ? void 0 : _b.classList) === null || _c === void 0 ? void 0 : _c.contains('u-component'))
+        var target = ((_c = (_b = event === null || event === void 0 ? void 0 : event.target) === null || _b === void 0 ? void 0 : _b.classList) === null || _c === void 0 ? void 0 : _c.contains("u-component"))
             ? event === null || event === void 0 ? void 0 : event.target
-            : (_d = event === null || event === void 0 ? void 0 : event.target) === null || _d === void 0 ? void 0 : _d.querySelector('.u-component');
-        var parent = (_e = target === null || target === void 0 ? void 0 : target.parentElement.closest('.u-component')) !== null && _e !== void 0 ? _e : target === null || target === void 0 ? void 0 : target.closest('.drop-zone');
+            : (_d = event === null || event === void 0 ? void 0 : event.target) === null || _d === void 0 ? void 0 : _d.querySelector(".u-component");
+        var parent = (_e = target === null || target === void 0 ? void 0 : target.parentElement.closest(".u-component")) !== null && _e !== void 0 ? _e : target === null || target === void 0 ? void 0 : target.closest(".drop-zone");
         return {
-            id: target === null || target === void 0 ? void 0 : target.getAttribute('id'),
+            id: target === null || target === void 0 ? void 0 : target.getAttribute("id"),
             target: target,
-            parentId: parent === null || parent === void 0 ? void 0 : parent.getAttribute('id'),
+            parentId: parent === null || parent === void 0 ? void 0 : parent.getAttribute("id"),
             parent: parent,
-            slots: target === null || target === void 0 ? void 0 : target.getAttribute('slots')
+            slots: target === null || target === void 0 ? void 0 : target.getAttribute("slots"),
         };
     }
     function makeReiszeAbleSelector(targetSelector, _a) {
         var _b = _a === void 0 ? { onResize: undefined } : _a, onResize = _b.onResize;
         (0, interactjs_1.default)(targetSelector)
             .resizable({
-            edges: { top: '.top', left: '.left', bottom: '.bottom', right: '.right' },
+            edges: {
+                top: ".top",
+                left: ".left",
+                bottom: ".bottom",
+                right: ".right",
+            },
             listeners: {
                 move: function (event) {
                     var _a = event.target.dataset, x = _a.x, y = _a.y;
@@ -48,18 +53,18 @@ function default_1() {
                     Object.assign(event.target.style, {
                         width: "".concat(event.rect.width, "px"),
                         height: "".concat(event.rect.height, "px"),
-                        transform: "translate(".concat(x, "px, ").concat(y, "px)")
+                        transform: "translate(".concat(x, "px, ").concat(y, "px)"),
                     });
                     Object.assign(event.target.dataset, { x: x, y: y });
-                }
-            }
+                },
+            },
         })
-            .on('down', function (event) {
-            if (event.target.classList.contains('resize-point')) {
+            .on("down", function (event) {
+            if (event.target.classList.contains("resize-point")) {
                 event.preventDefault();
             }
         })
-            .on('resizeend', function (event) {
+            .on("resizeend", function (event) {
             var details = getDetails(event);
             onResize && onResize(event, details);
             resize && resize(event, details);
@@ -67,30 +72,30 @@ function default_1() {
     }
     function makeDragAble(el, _a) {
         var onDragStart = _a.onDragStart, onDragEnd = _a.onDragEnd;
-        el.setAttribute('draggable', 'true');
+        el.setAttribute("draggable", "true");
         var target = el;
         if (!target)
             return;
-        target.setAttribute('tabindex', 0);
-        if (!target.querySelector('.control')) {
+        target.setAttribute("tabindex", 0);
+        if (!target.querySelector(".control")) {
             (0, utils_1.addComponentControllers)(target);
         }
-        if (!target.querySelector('.edges')) {
+        if (!target.querySelector(".edges")) {
             (0, utils_1.addResizePoints)(target);
         }
-        el.addEventListener('dragstart', function (event) {
+        el.addEventListener("dragstart", function (event) {
             if (!event.dataTransfer)
                 return;
             event.stopPropagation();
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.dropEffect = 'move';
+            event.dataTransfer.effectAllowed = "move";
+            event.dataTransfer.dropEffect = "move";
             var template = event.target.outerHTML;
-            event.dataTransfer.setData('text/html', template);
-            event.target.style.display = 'none';
+            event.dataTransfer.setData("text/html", template);
+            event.target.style.display = "none";
             onDragStart && onDragStart(event);
             remove && remove(event, getDetails(event));
         });
-        el.addEventListener('dragend', function (event) {
+        el.addEventListener("dragend", function (event) {
             event.target.parentElement.remove();
             onDragEnd && onDragEnd(event);
         });
@@ -98,11 +103,11 @@ function default_1() {
     function makeDropZone(el, _a) {
         var onDragEnter = _a.onDragEnter, onDragOver = _a.onDragOver, onDragLeave = _a.onDragLeave, onDrop = _a.onDrop;
         onDragEnter &&
-            el.addEventListener('dragenter', function (event) {
+            el.addEventListener("dragenter", function (event) {
                 event.preventDefault();
                 onDragEnter(event);
             });
-        el.addEventListener('dragover', function (event) {
+        el.addEventListener("dragover", function (event) {
             event.preventDefault();
             if (fireContoller < 20) {
                 fireContoller++;
@@ -114,18 +119,18 @@ function default_1() {
             onDragOver && onDragOver(event);
         });
         onDragLeave &&
-            el.addEventListener('dragleave', function (event) {
+            el.addEventListener("dragleave", function (event) {
                 (0, utils_1.removePlaceholder)();
                 event.preventDefault();
                 onDragLeave(event);
             });
-        el.addEventListener('drop', function (event) {
+        el.addEventListener("drop", function (event) {
             event === null || event === void 0 ? void 0 : event.preventDefault();
-            var component = (0, utils_1.addWrapperToComponent)(event === null || event === void 0 ? void 0 : event.dataTransfer.getData('text/html'));
+            var component = (0, utils_1.addWrapperToComponent)(event === null || event === void 0 ? void 0 : event.dataTransfer.getData("text/html"));
             (0, utils_1.replacePlaceholder)(component);
             onDrop && onDrop(event);
         });
-        el.addEventListener('DOMNodeInserted', function (event) {
+        el.addEventListener("DOMNodeInserted", function (event) {
             var details = getDetails(event);
             var target = details.target;
             if (target) {
@@ -133,7 +138,7 @@ function default_1() {
             }
             insert && insert(event, details);
         });
-        el.addEventListener('focusin', function (event) {
+        el.addEventListener("focusin", function (event) {
             event.preventDefault();
             event.stopPropagation();
             var details = getDetails(event);
@@ -141,17 +146,20 @@ function default_1() {
                 return;
             focusIn && focusIn(event, details);
         });
-        el.addEventListener('click', function (event) {
+        el.addEventListener("click", function (event) {
             var _a, _b;
             event.preventDefault();
             // event.stopPropagation();
-            if (!((_b = (_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.classList) === null || _b === void 0 ? void 0 : _b.contains('drop-zone')))
+            if (!((_b = (_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.classList) === null || _b === void 0 ? void 0 : _b.contains("drop-zone")))
                 return;
             focusOut && focusOut(event, {});
         });
     }
     function makeDragAbleSelector(query, _a) {
-        var _b = _a === void 0 ? { onDragEnd: undefined, onDragStart: undefined } : _a, onDragStart = _b.onDragStart, onDragEnd = _b.onDragEnd;
+        var _b = _a === void 0 ? {
+            onDragEnd: undefined,
+            onDragStart: undefined,
+        } : _a, onDragStart = _b.onDragStart, onDragEnd = _b.onDragEnd;
         document.querySelectorAll(query).forEach(function (element) {
             makeDragAble(element, { onDragStart: onDragStart, onDragEnd: onDragEnd });
         });
@@ -191,7 +199,7 @@ function default_1() {
         onRemove: onRemove,
         onFocusIn: onFocusIn,
         onFocusOut: onFocusOut,
-        onResize: onResize
+        onResize: onResize,
     };
 }
 exports.default = default_1;
