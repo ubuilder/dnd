@@ -15,24 +15,36 @@ function default_1() {
     var fireContoller = 0; //conttrol drag over event speed
     function getDetails(event) {
         var _a, _b, _c, _d, _e;
-        if (!((_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.tagName))
-            return {
-                id: undefined,
-                target: undefined,
-                parent: undefined,
-                parentId: undefined,
-                slots: undefined,
-            };
-        var target = ((_c = (_b = event === null || event === void 0 ? void 0 : event.target) === null || _b === void 0 ? void 0 : _b.classList) === null || _c === void 0 ? void 0 : _c.contains("u-component"))
+        var response = {
+            id: undefined,
+            target: undefined,
+            parent: undefined,
+            parentId: undefined,
+            index: undefined,
+            slots: undefined
+        };
+        if (((_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.nodeType) != 1)
+            return response;
+        var target = ((_c = (_b = event === null || event === void 0 ? void 0 : event.target) === null || _b === void 0 ? void 0 : _b.classList) === null || _c === void 0 ? void 0 : _c.contains('u-component'))
             ? event === null || event === void 0 ? void 0 : event.target
-            : (_d = event === null || event === void 0 ? void 0 : event.target) === null || _d === void 0 ? void 0 : _d.querySelector(".u-component");
-        var parent = (_e = target === null || target === void 0 ? void 0 : target.parentElement.closest(".u-component")) !== null && _e !== void 0 ? _e : target === null || target === void 0 ? void 0 : target.closest(".drop-zone");
+            : (_d = event === null || event === void 0 ? void 0 : event.target) === null || _d === void 0 ? void 0 : _d.querySelector('.u-component');
+        if (!target)
+            return response;
+        var parent = (_e = target === null || target === void 0 ? void 0 : target.parentElement.closest('.u-component')) !== null && _e !== void 0 ? _e : target === null || target === void 0 ? void 0 : target.closest('.drop-zone');
+        var index;
+        if (parent.classList.contains('drop-zone')) {
+            index = Array.from(parent.childNodes).indexOf(event.target);
+        }
+        else {
+            index = Array.from(parent.querySelector('.u-slot').childNodes).indexOf(event.target);
+        }
         return {
-            id: target === null || target === void 0 ? void 0 : target.getAttribute("id"),
+            id: target === null || target === void 0 ? void 0 : target.getAttribute('id'),
             target: target,
-            parentId: parent === null || parent === void 0 ? void 0 : parent.getAttribute("id"),
+            parentId: parent === null || parent === void 0 ? void 0 : parent.getAttribute('id'),
+            index: index,
             parent: parent,
-            slots: target === null || target === void 0 ? void 0 : target.getAttribute("slots"),
+            slots: target === null || target === void 0 ? void 0 : target.getAttribute('slots')
         };
     }
     function makeReiszeAbleSelector(targetSelector, _a) {
