@@ -21,34 +21,43 @@ export default function () {
     target: HTMLElement | undefined;
     parentId: string | number | undefined;
     parent: HTMLElement | undefined;
+    index: number | undefined;
     slots: [] | string | undefined;
   }
   function getDetails(event: Event): details {
-    if (!event?.target?.tagName)
-      return {
-        id: undefined,
-        target: undefined,
-        parent: undefined,
-        parentId: undefined,
-        slots: undefined,
-      };
+		const response: details = {
+			id: undefined,
+			target: undefined,
+			parent: undefined,
+			parentId: undefined,
+			index: undefined,
+			slots: undefined
+		};
+		if (event?.target?.nodeType != 1)
+			return response
+		
+		const target = event?.target?.classList?.contains('u-component')
+		? event?.target
+		: event?.target?.querySelector('.u-component');
+		if(!target)return response;
 
-    const target = event?.target?.classList?.contains("u-component")
-      ? event?.target
-      : event?.target?.querySelector(".u-component");
+		const parent = target?.parentElement.closest('.u-component') ?? target?.closest('.drop-zone');
+		let index;
+		if(parent.classList.contains('drop-zone')){
+			index = Array.from(parent.childNodes).indexOf(event.target)
+		}else{
+			index = Array.from(parent.querySelector('.u-slot').childNodes).indexOf(event.target)
+		}
 
-    const parent =
-      target?.parentElement.closest(".u-component") ??
-      target?.closest(".drop-zone");
-
-    return {
-      id: target?.getAttribute("id"),
-      target,
-      parentId: parent?.getAttribute("id"),
-      parent,
-      slots: target?.getAttribute("slots"),
-    };
-  }
+		return {
+			id: target?.getAttribute('id'),
+			target,
+			parentId: parent?.getAttribute('id'),
+			index,
+			parent,
+			slots: target?.getAttribute('slots')
+		};
+	}
   function makeReiszeAbleSelector(
     targetSelector: string,
     { onResize } = { onResize: undefined }
