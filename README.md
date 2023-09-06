@@ -28,7 +28,7 @@ there are a set if events that are fired when specific actions take place, you c
 * onUpdate
 
 ```js
-dnd.onInsert((event, {id, target, parent, parentId, slots})=>{
+dnd.onInsert((event, {id, index, target, parent, parentId, slots})=>{
    console.log('inserted component id: ', id)
 });
 
@@ -43,10 +43,8 @@ dnd.onRemove((event, {id, target, parent, parentId, slots})=>{
 dnd.onResize((event, {id, target, parent, parentId, slots})=>{
    console.log('resized component id: ', id)
 })
-
-dnd.onResize((event, {id, target, parent, parentId, slots})=>{
+dnd.onFocusIn((event, {id, index, target, parent, parentId, slots})=>{
    console.log('resized component id: ', id)
 })
-
 ```
 
